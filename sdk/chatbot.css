@@ -19,7 +19,6 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    /* Only the soft halo */
     box-shadow: 0 2px 18px 0 rgba(80, 80, 80, 0.5);
     transition:
         background 0.2s,
@@ -366,10 +365,8 @@
 
 #ewcb-stop {
     background: transparent;
-    /* Sem fundo */
     border: none;
     color: #f43f5e;
-    /* Cor do emoji/texto */
     font-weight: bold;
     border-radius: 50%;
     width: 44px;
@@ -394,9 +391,7 @@
 
 #ewcb-stop:hover {
     background: #f43f5e11;
-    /* Fundo levemente rosado só no hover */
     color: #be123c;
-    /* Fica um tom mais escuro */
 }
 
 @media (max-width: 500px) {
@@ -421,7 +416,6 @@
     align-items: center;
     gap: 3px;
     margin: 6px 0 2px 38px;
-    /* Indent like bot messages */
     height: 26px;
 }
 
@@ -492,14 +486,12 @@
     }
 }
 
-/* Aplica apenas à área do chat */
 .ewcb-chat-body,
 #ewcb-messages {
     scrollbar-width: thin;
     scrollbar-color: var(--primaryColor, #23a267) var(--backgroundColor, #181c24);
 }
 
-/* Para navegadores baseados em Webkit (Chrome, Edge, Safari) */
 .ewcb-chat-body::-webkit-scrollbar,
 #ewcb-messages::-webkit-scrollbar {
     width: 8px;
@@ -513,7 +505,6 @@
     border: 2px solid var(--backgroundColor, #181c24);
 }
 
-/* Opcional: ao passar o mouse */
 .ewcb-chat-body::-webkit-scrollbar-thumb:hover,
 #ewcb-messages::-webkit-scrollbar-thumb:hover {
     background: var(--botBubble, #23a267cc);
