@@ -42,10 +42,10 @@ All the core functionalities listed below have been fully developed and are func
 - [x] Real-time interaction with artificial intelligence directly in the browser
 - [x] Execution of responses in real time
 - [x] Ability to stop or abort a response on demand
-- [] Multi-browser support (cross-browser compatibility)
-- [] Extended customization options for chatbot behavior
-- [] Advanced session management and persistence
-- [] Integration with external APIs for enhanced responses
+- [ ] Multi-browser support (cross-browser compatibility)
+- [ ] Extended customization options for chatbot behavior
+- [ ] Advanced session management and persistence
+- [ ] Integration with external APIs for enhanced responses
 
 <div id="application-demonstration"></div>
 
