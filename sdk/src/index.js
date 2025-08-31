@@ -1,6 +1,6 @@
-import { ChatbotView } from './views/chatBotView.js';
-import { PromptService } from './services/promptService.js';
-import { ChatbotController } from './controllers/chatBotController.js';
+import { ChatbotView } from './views/chatbot-view.js';
+import { PromptService } from './services/prompt-service.js';
+import { ChatbotController } from './controllers/chatbot-controller.js';
 
 (async () => {
     const root = new URL('../../', import.meta.url);

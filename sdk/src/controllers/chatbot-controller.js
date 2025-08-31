@@ -1,8 +1,8 @@
 // @ts-check
 
 /**
- * @typedef {import("../views/chatBotView.js").ChatbotView} ChatBotView
- * @typedef {import("../services/promptService.js").PromptService} PromptService
+ * @typedef {import("../views/chatbot-view.js").ChatbotView} ChatBotView
+ * @typedef {import("../services/prompt-service.js").PromptService} PromptService
  */
 export class ChatbotController {
     #abortController;
