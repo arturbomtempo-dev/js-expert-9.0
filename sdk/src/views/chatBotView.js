@@ -28,16 +28,23 @@ export class ChatbotView {
             this.openChat();
             onOpen();
         };
+
         this.#stopBtn.onclick = () => {
             onStop();
         };
+
         this.#closeBtn.onclick = () => {
             this.closeChat();
         };
+
         this.#form.onsubmit = (e) => {
             e.preventDefault();
             const val = this.#input.value.trim();
-            if (!val) return;
+
+            if (!val) {
+                return;
+            }
+
             this.appendUserMessage(val);
             this.clearInput();
             onSend(val);
@@ -53,27 +60,36 @@ export class ChatbotView {
     openChat() {
         this.#chatWin.style.display = 'flex';
         this.#floatingIconBadge.style.display = 'none';
+
         setTimeout(() => this.focusInput(), 180);
+
         this.hideWelcomeBubble();
     }
+
     closeChat() {
         this.#chatWin.style.display = 'none';
     }
 
     renderWelcomeBubble() {
         this.#removeElement(this.#welcomeBubble);
+
         const bubble = document.createElement('div');
+
         bubble.className = 'ewcb-welcome-bubble';
         bubble.textContent = this.#config.welcomeBubble;
+
         bubble.onclick = () => {
             this.openChat();
         };
+
         document.body.appendChild(bubble);
         this.#welcomeBubble = bubble;
     }
 
     hideWelcomeBubble() {
-        if (this.#welcomeBubble) this.#welcomeBubble.style.display = 'none';
+        if (this.#welcomeBubble) {
+            this.#welcomeBubble.style.display = 'none';
+        }
     }
 
     #renderBotMessageHTML(text, renderMarkdown = true) {
@@ -111,14 +127,18 @@ export class ChatbotView {
 
     #createBotMessage() {
         const msg = document.createElement('div');
+
         msg.className = 'ewcb-message ewcb-message-bot';
+
         return msg;
     }
 
     #createUserMessage(text) {
         const msg = document.createElement('div');
+
         msg.className = 'ewcb-message ewcb-message-user';
         msg.innerHTML = `<div class="ewcb-message-content">${text}</div>`;
+
         return msg;
     }
 
@@ -126,12 +146,14 @@ export class ChatbotView {
         this.hideTypingIndicator();
 
         const indicator = document.createElement('div');
+
         indicator.className = 'ewcb-typing-indicator';
         indicator.innerHTML = `
             <span class="ewcb-typing-dot"></span>
             <span class="ewcb-typing-dot"></span>
             <span class="ewcb-typing-dot"></span>
         `;
+
         this.#append(indicator);
     }
 
@@ -158,7 +180,9 @@ export class ChatbotView {
     }
 
     #removeElement(el) {
-        if (el && el.parentNode) el.parentNode.removeChild(el);
+        if (el && el.parentNode) {
+            el.parentNode.removeChild(el);
+        }
     }
 
     #applyTheme() {
@@ -174,10 +198,12 @@ export class ChatbotView {
             }
         });
     }
+
     #setHeader() {
         this.#header.querySelector('#ewcb-header-icon').src = this.#config.iconUrl;
         this.#header.querySelector('#ewcb-chatbot-name').textContent = this.#config.chatbotName;
     }
+
     #setFloatingIcon() {
         this.#floatingIcon.src = this.#config.iconUrl;
     }

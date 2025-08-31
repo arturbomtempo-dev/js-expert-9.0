@@ -14,18 +14,20 @@ import { ChatbotController } from './controllers/chatBotController.js';
     ]);
 
     const style = document.createElement('style');
+
     style.textContent = css;
     document.head.appendChild(style);
 
     const container = document.createElement('div');
+
     container.innerHTML = html;
     document.body.appendChild(container);
 
     const promptService = new PromptService();
-
     const chatbotView = new ChatbotView(config);
     const controller = new ChatbotController({ chatbotView, promptService });
     const text = systemPrompt.concat('\n', llmsTxt);
+
     controller.init({
         firstBotMessage: config.firstBotMessage,
         text,
