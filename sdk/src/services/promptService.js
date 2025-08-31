@@ -30,6 +30,6 @@ export class PromptService {
             content: text,
         });
 
-        return this.#session.prompt(this.#messages);
+        return this.#session.promptStreaming(this.#messages);
     }
 }

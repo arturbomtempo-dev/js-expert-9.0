@@ -41,12 +41,37 @@ export class ChatbotController {
         this.#chatbotView.showTypingIndicator();
         this.#chatbotView.setInputEnabled(false);
 
-        const response = await this.#promptService.prompt(userMsg);
-        console.log('response: ', response);
+        const contentNode = this.#chatbotView.createStreamingBotMessage();
+        const response = this.#promptService.prompt(userMsg);
+        let fullResponse = '';
+        let lastMessage = 'noop';
 
-        this.#chatbotView.appendBotMessage(response);
-        this.#chatbotView.setInputEnabled(true);
-        this.#chatbotView.hideTypingIndicator();
+        const updateText = () => {
+            if (!fullResponse) {
+                return;
+            }
+
+            if (fullResponse === lastMessage) {
+                return;
+            }
+
+            lastMessage = fullResponse;
+            this.#chatbotView.hideTypingIndicator();
+            this.#chatbotView.updateStreamingBotMessage(contentNode, fullResponse);
+        };
+
+        const intervalId = setInterval(updateText, 200);
+
+        for await (const chunk of response) {
+            if (!chunk) {
+                continue;
+            }
+
+            fullResponse += chunk;
+        }
+
+        console.log('Full Response: ', fullResponse);
+        console.log('Response: ', response);
     }
 
     async #onOpen() {
