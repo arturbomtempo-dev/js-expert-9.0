@@ -5,6 +5,7 @@
  * @typedef {import("../services/promptService.js").PromptService} PromptService
  */
 export class ChatbotController {
+    #abortController;
     #chatbotView;
     #promptService;
 
@@ -35,48 +36,64 @@ export class ChatbotController {
         });
     }
 
-    #handleStop() {}
+    #handleStop() {
+        this.#abortController.abort();
+    }
 
     async #chatBotReply(userMsg) {
         this.#chatbotView.showTypingIndicator();
         this.#chatbotView.setInputEnabled(false);
 
-        const contentNode = this.#chatbotView.createStreamingBotMessage();
-        const response = this.#promptService.prompt(userMsg);
-        let fullResponse = '';
-        let lastMessage = 'noop';
+        try {
+            this.#abortController = new AbortController();
 
-        const updateText = () => {
-            if (!fullResponse) {
-                return;
+            const contentNode = this.#chatbotView.createStreamingBotMessage();
+            const response = this.#promptService.prompt(userMsg, this.#abortController.signal);
+            let fullResponse = '';
+            let lastMessage = 'noop';
+
+            const updateText = () => {
+                if (!fullResponse) {
+                    return;
+                }
+
+                if (fullResponse === lastMessage) {
+                    return;
+                }
+
+                lastMessage = fullResponse;
+                this.#chatbotView.hideTypingIndicator();
+                this.#chatbotView.updateStreamingBotMessage(contentNode, fullResponse);
+            };
+
+            const intervalId = setInterval(updateText, 200);
+
+            const stopGenerating = () => {
+                clearInterval(intervalId);
+                updateText();
+                this.#chatbotView.setInputEnabled(true);
+            };
+
+            this.#abortController.signal.addEventListener('abort', stopGenerating);
+
+            for await (const chunk of response) {
+                if (!chunk) {
+                    continue;
+                }
+
+                fullResponse += chunk;
             }
 
-            if (fullResponse === lastMessage) {
-                return;
-            }
-
-            lastMessage = fullResponse;
+            stopGenerating();
+        } catch (error) {
             this.#chatbotView.hideTypingIndicator();
-            this.#chatbotView.updateStreamingBotMessage(contentNode, fullResponse);
-        };
 
-        const intervalId = setInterval(updateText, 200);
-
-        const stopGenerating = () => {
-            clearInterval(intervalId);
-            updateText();
-            this.#chatbotView.setInputEnabled(true);
-        };
-
-        for await (const chunk of response) {
-            if (!chunk) {
-                continue;
+            if (error.name === 'AbortError') {
+                return console.error('Request aborted by the user.');
             }
 
-            fullResponse += chunk;
+            this.#chatbotView.appendBotMessage('Error getting response from AI.');
         }
-
-        stopGenerating();
     }
 
     async #onOpen() {
