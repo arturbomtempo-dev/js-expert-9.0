@@ -62,6 +62,12 @@ export class ChatbotController {
 
         const intervalId = setInterval(updateText, 200);
 
+        const stopGenerating = () => {
+            clearInterval(intervalId);
+            updateText();
+            this.#chatbotView.setInputEnabled(true);
+        };
+
         for await (const chunk of response) {
             if (!chunk) {
                 continue;
@@ -70,8 +76,7 @@ export class ChatbotController {
             fullResponse += chunk;
         }
 
-        console.log('Full Response: ', fullResponse);
-        console.log('Response: ', response);
+        stopGenerating();
     }
 
     async #onOpen() {
