@@ -6,10 +6,28 @@
         "start": "browser-sync -w . --server --files 'sdk/**' --port 3000",
         "format": "prettier --write ."
     },
-    "keywords": [],
+    "keywords": [
+        "ai",
+        "chatbot",
+        "web4",
+        "browser",
+        "real-time",
+        "javascript",
+        "nodejs",
+        "conversational-interface",
+        "github-integration",
+        "gemini-nano",
+        "language-model",
+        "ew-academy",
+        "modern-web",
+        "context-aware",
+        "translation",
+        "browser-sync",
+        "educational"
+    ],
     "author": "Artur Bomtempo Colen",
-    "license": "ISC",
-    "description": "",
+    "license": "MIT",
+    "description": "A browser-based AI chatbot that provides real-time, context-aware responses and translates information from a personal GitHub profile, demonstrating Web 4.0 concepts and modern conversational interfaces.",
     "devDependencies": {
         "browser-sync": "^3.0.4",
         "prettier": "^3.6.2"
